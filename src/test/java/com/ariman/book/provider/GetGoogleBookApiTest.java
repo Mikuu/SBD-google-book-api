@@ -1,21 +1,41 @@
 package com.ariman.book.provider;
 
-import com.ariman.book.model.Books;
+import io.restassured.RestAssured.*;
+import io.restassured.matcher.RestAssuredMatchers.*;
+import org.hamcrest.Matchers.*;
+import static org.hamcrest.CoreMatchers.*;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static io.restassured.RestAssured.given;
 
 /**
  * Created by Biao on 27/10/2017.
  */
 public class GetGoogleBookApiTest {
 
-    private GoogleBookApi googleBookApi = new GoogleBookApi();
+    private String baseUrl = "http://localhost:8080/books";
 
     @Test
-    public void testGetGoogleBooks() throws Exception {
-        Books books = this.googleBookApi.getGoogleBooks("Miku", "3");
+    public void testGetGoogleBooksTitle() throws Exception {
+        given()
+                .param("query", "Nanoha")
+        .when()
+                .get(baseUrl)
+        .then()
+                .assertThat()
+                .statusCode(200)
+                .body("items[0].volumeInfo.title", containsString("Nanoha"));
+    }
 
-        assertEquals(books.getItems().get(0).getVolumeInfo().getTitle(), "Hatsune Miku: Acute");
+    @Test
+    public void testGetGoogleBooksSelfLink() throws Exception {
+        given()
+                .param("query", "Miku")
+        .when()
+                .get(baseUrl)
+        .then()
+                .assertThat()
+                .statusCode(200)
+                .body("items[0].selfLink", startsWith("https://www.googleapis.com/books/"));
     }
 }
