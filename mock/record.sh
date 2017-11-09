@@ -1,0 +1,1 @@
+java -jar wiremock-standalone-2.10.1.jar --port 8001 --proxy-all="https://www.googleapis.com" --root-dir=mock-data --record-mappings --verbose
