@@ -31,6 +31,7 @@ dependencies {
     compile("org.springframework:spring-web")
     compile("com.fasterxml.jackson.core:jackson-databind")
     testCompile("io.rest-assured:rest-assured:3.0.5")
+    testCompile("com.github.tomakehurst:wiremock:2.5.0")
     testCompile("junit:junit")
 }
 

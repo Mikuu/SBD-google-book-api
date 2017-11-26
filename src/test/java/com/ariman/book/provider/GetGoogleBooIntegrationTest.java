@@ -1,19 +1,33 @@
 package com.ariman.book.provider;
 
-import io.restassured.RestAssured.*;
-import io.restassured.matcher.RestAssuredMatchers.*;
-import org.hamcrest.Matchers.*;
-import static org.hamcrest.CoreMatchers.*;
+import com.github.tomakehurst.wiremock.WireMockServer;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
+import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.startsWith;
 
 /**
  * Created by Biao on 27/10/2017.
  */
-public class GetGoogleBookApiTest {
+public class GetGoogleBooIntegrationTest {
 
     private String baseUrl = "http://localhost:8080/books";
+
+    private static WireMockServer wireMockServer = new WireMockServer(wireMockConfig().port(8001).usingFilesUnderDirectory("mock/mock-data"));
+
+    @BeforeClass
+    public static void setup() {
+        wireMockServer.start();
+    }
+
+    @AfterClass
+    public static void teardown() {
+        wireMockServer.shutdown();
+    }
 
     @Test
     public void testGetGoogleBooksSelfLink() throws Exception {
