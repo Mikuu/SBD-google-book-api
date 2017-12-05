@@ -13,7 +13,7 @@ import static org.hamcrest.CoreMatchers.startsWith;
 /**
  * Created by Biao on 27/10/2017.
  */
-public class GetGoogleBooIntegrationTest {
+public class GetGoogleBookIntegrationTest {
 
     private String baseUrl = "http://localhost:8080/books";
 
